@@ -23,8 +23,7 @@ sealed class BarbershopThema {
       style: ElevatedButton.styleFrom(
         foregroundColor: Colors.white,
         backgroundColor: ColorsConstants.brow,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))
-
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       ),      
     ),
     fontFamily: FontsConstants.fontFamily
