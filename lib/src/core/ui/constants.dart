@@ -6,6 +6,12 @@ sealed class FontsConstants {
   
 }
 
+sealed class ImagemConstants {
+  static const backgroundChair = 'assets/images/background_image_chair.jpg';
+  static const imageLogo = 'assets/images/background_image_chair.jpg';
+  static const avatar = 'assets/images/avatar.jpg';
+}
+
 sealed class ColorsConstants {
   static const brow = Color(0XFFB07B01);
   static const gray = Color(0XFF999999);
