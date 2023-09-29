@@ -1,3 +1,4 @@
+import 'package:curso_dw_barbershop/src/core/rest_client/interceptors/auth_interceptor.dart';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 
@@ -12,6 +13,7 @@ final class RestClient extends DioForNative {
         requestBody: true,
         responseBody: true,
       ),
+      AuthInterceptor(),
     ]);
   }
 
