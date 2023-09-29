@@ -1,6 +1,8 @@
 
 import 'package:curso_dw_barbershop/src/core/ui/constants.dart';
 import 'package:curso_dw_barbershop/src/core/ui/helpers/form_helper.dart';
+import 'package:curso_dw_barbershop/src/core/ui/helpers/messages.dart';
+import 'package:curso_dw_barbershop/src/features/auth/login/login_state.dart';
 import 'package:curso_dw_barbershop/src/features/auth/login/login_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -28,6 +30,21 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   @override
   Widget build(BuildContext context) {
     final LoginVm(:login) = ref.watch(loginVmProvider.notifier);
+    ref.listen(loginVmProvider, (_, state) {
+      switch (state) {
+        case LoginState(status: LoginStateStatus.initial):
+          break;
+        case LoginState(status: LoginStateStatus.error, :final errorMessage?):
+          Messages.showError(errorMessage, context);
+
+        case LoginState(status: LoginStateStatus.error):
+          Messages.showError('Erro ao realizar login', context);
+        case LoginState(status: LoginStateStatus.admLogin):
+          break;
+        case LoginState(status: LoginStateStatus.employeeLogin):
+          break;
+      }
+    });
     return Scaffold(
       backgroundColor: Colors.black,
       body: Form(
@@ -108,6 +125,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                               onPressed: () {
                                 switch (formKey.currentState?.validate()) {
                                   case (false || null):
+                                  Messages.showError('Campos inválidos', context);
                                   case true:
                                     login(emailEC.text, passwordEC.text);
                                 }
