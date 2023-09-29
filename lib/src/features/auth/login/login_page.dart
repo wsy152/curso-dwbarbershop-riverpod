@@ -1,21 +1,22 @@
+
 import 'package:curso_dw_barbershop/src/core/ui/constants.dart';
 import 'package:curso_dw_barbershop/src/core/ui/helpers/form_helper.dart';
+import 'package:curso_dw_barbershop/src/features/auth/login/login_vm.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:validatorless/validatorless.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  ConsumerState<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
-
+class _LoginPageState extends ConsumerState<LoginPage> {
   final formKey = GlobalKey<FormState>();
   final emailEC = TextEditingController();
   final passwordEC = TextEditingController();
-
 
   @override
   void dispose() {
@@ -24,9 +25,9 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-  
   @override
   Widget build(BuildContext context) {
+    final LoginVm(:login) = ref.watch(loginVmProvider.notifier);
     return Scaffold(
       backgroundColor: Colors.black,
       body: Form(
@@ -54,16 +55,13 @@ class _LoginPageState extends State<LoginPage> {
                           const SizedBox(
                             height: 24,
                           ),
-                           TextFormField(
-                            onTapOutside: (_)=> context.unfocus(),
+                          TextFormField(
+                            onTapOutside: (_) => context.unfocus(),
                             validator: Validatorless.multiple([
                               Validatorless.required('E-mail obrigatório'),
                               Validatorless.email('E-mail inválido'),
-
                             ]),
                             controller: emailEC,
-                            
-                            
                             decoration: const InputDecoration(
                                 label: Text('Email'),
                                 hintText: 'E-mail',
@@ -75,12 +73,12 @@ class _LoginPageState extends State<LoginPage> {
                           const SizedBox(
                             height: 24,
                           ),
-                           TextFormField(
+                          TextFormField(
                             onTapOutside: (_) => context.unfocus(),
                             validator: Validatorless.multiple([
                               Validatorless.required('Password obrigatório'),
-                              Validatorless.min(6,'Senha deve conter no minimo 6 caracters'),
-
+                              Validatorless.min(
+                                  6, 'Senha deve conter no minimo 6 caracters'),
                             ]),
                             controller: passwordEC,
                             decoration: const InputDecoration(
@@ -105,8 +103,16 @@ class _LoginPageState extends State<LoginPage> {
                             height: 24,
                           ),
                           ElevatedButton(
-                            style: ElevatedButton.styleFrom(minimumSize: const Size.fromHeight(56)),
-                              onPressed: () {}, child: const Text('data')),
+                              style: ElevatedButton.styleFrom(
+                                  minimumSize: const Size.fromHeight(56)),
+                              onPressed: () {
+                                switch (formKey.currentState?.validate()) {
+                                  case (false || null):
+                                  case true:
+                                    login(emailEC.text, passwordEC.text);
+                                }
+                              },
+                              child: const Text('data')),
                         ],
                       ),
                       const Align(

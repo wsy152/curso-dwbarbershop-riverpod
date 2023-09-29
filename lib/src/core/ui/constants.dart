@@ -8,7 +8,7 @@ sealed class FontsConstants {
 
 sealed class ImagemConstants {
   static const backgroundChair = 'assets/images/background_image_chair.jpg';
-  static const imageLogo = 'assets/images/background_image_chair.jpg';
+  static const imageLogo = 'assets/images/imgLogo.png';
   static const avatar = 'assets/images/avatar.jpg';
 }
 
