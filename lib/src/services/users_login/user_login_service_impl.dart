@@ -21,14 +21,14 @@ class UserLoginServiceImpl implements UserLoginService {
       case Success(value: final accessToken): 
         final sp = await SharedPreferences.getInstance();
         sp.setString(LocalStorageKey.accessToken, accessToken);
-        return Success(nil);
+        return Success(value:  nil);
       case Failure(:final exception):
         return switch (exception) {
           AuthError() =>Failure(SeviceException(message: 'Erro ao realizar login')),
           AuthUnathorizedException() => Failure(SeviceException(message: 'Login ou senha invalidos')),
         };        
     }
-    return Success(nil);
+    return Success(value: nil);
   }
   
 }

@@ -19,7 +19,7 @@ class UserRepositoryImpl implements UserRepository {
     try {
       final Response(:data) = await restClient.unAuth
           .post('/auth', data: {'email': email, 'password': password});
-      return Success(data['access_token']);
+      return Success(value:  data['access_token']);
     } on DioException catch (e, s) {
       if (e.response != null) {
         final Response(:statusCode) = e.response!;
@@ -36,7 +36,7 @@ class UserRepositoryImpl implements UserRepository {
   Future<Either<RepositoryException, UserModel>> me() async {
     try {
       final Response(:data) = await restClient.auth.get('/me');
-      return Success(UserModel.fromMap(data));
+      return Success(value:  UserModel.fromMap(data));
     } on DioException catch (e, s) {
       log('Erro ao buscar usuário logado', error: e, stackTrace: s);
       return Failure(RepositoryException(message: "Erro ao buscar usuário logado"));
